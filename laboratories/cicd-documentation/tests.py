@@ -1,5 +1,5 @@
-from node import Node
-from node import Tree
+from tree import Tree
+
 
 def test_find_existing_node():
     tree = Tree()
@@ -7,7 +7,7 @@ def test_find_existing_node():
     tree.add(5)
     tree.add(15)
 
-    node = tree._find(5, tree.getRoot())
+    node = tree.find(5)
     assert node is not None
     assert node.data == 5
 
@@ -18,5 +18,5 @@ def test_find_non_existing_node():
     tree.add(5)
     tree.add(15)
 
-    node = tree._find(20, tree.getRoot())
+    node = tree.find(100)
     assert node is None
