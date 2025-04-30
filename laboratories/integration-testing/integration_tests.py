@@ -43,7 +43,26 @@ def test_create_task(user_id):
 
     Hint: În răspunsul de la /get-task nu vei mai avea `user_id`, deci verifică doar ce este disponibil.
     """
-    pass
+
+    task_data = {
+        "user_id": user_id,
+        "content": "Test task content",
+        "is_done": False
+    }
+
+    put_response = requests.put(f"{BASE_URL}/create-task", json=task_data)
+    assert put_response.status_code == 200
+
+    task = put_response.json()["task"]
+    task_id = task["task_id"]
+
+    get_response = requests.get(f"{BASE_URL}/get-task/{task_id}")
+    assert get_response.status_code == 200
+
+    retrieved_task = get_response.json()["task"]
+    assert retrieved_task["content"] == task_data["content"]
+    assert retrieved_task["is_done"] == task_data["is_done"]
+
 
 
 def test_update_task(sample_task):
